@@ -1,14 +1,20 @@
 # Foundatio.LuceneQuery
 
-A high-performance Lucene query string parser for .NET that converts query strings into an Abstract Syntax Tree (AST). Supports query transformation via visitors and includes Entity Framework Core integration for generating LINQ expressions.
+A library for adding dynamic Lucene-style query capabilities to your .NET applications. Enable your users to write powerful search queries using familiar Lucene syntax, with support for Entity Framework Core and (coming soon) Elasticsearch.
+
+This project is a modern replacement for [Foundatio.Parsers](https://github.com/FoundatioFx/Foundatio.Parsers).
 
 ## Features
 
+- **Dynamic User Queries** - Let users write powerful search queries using Lucene syntax
+- **Entity Framework Integration** - Convert Lucene queries directly to LINQ expressions for EF Core
+- **Elasticsearch Support** - (Coming soon) Generate Elasticsearch queries from the same syntax
 - **Full Lucene Query Syntax** - Terms, phrases, fields, ranges, boolean operators, wildcards, regex, and more
-- **Elasticsearch Extensions** - Date math expressions (`now-1d`, `2024-01-01||+1M/d`), `_exists_`, `_missing_`
+- **Date Math Expressions** - Support for Elasticsearch-style date math (`now-1d`, `2024-01-01||+1M/d`)
 - **Visitor Pattern** - Transform, validate, or analyze queries with composable visitors
+- **Field Aliasing** - Map user-friendly field names to your actual data model
+- **Query Validation** - Restrict allowed fields, operators, and patterns
 - **Round-Trip Capable** - Parse queries to AST and convert back to query strings
-- **Entity Framework Integration** - Convert Lucene queries directly to LINQ expressions
 - **Error Recovery** - Resilient parser returns partial AST with detailed error information
 
 ## Installation
@@ -94,19 +100,52 @@ if (!validationResult.IsValid)
 
 ### Entity Framework Integration
 
+Enable dynamic, user-driven queries in your API endpoints:
+
 ```csharp
 using Foundatio.LuceneQuery.EntityFramework;
 
+// In your API controller or service
+[HttpGet("employees")]
+public async Task<IActionResult> SearchEmployees([FromQuery] string query)
+{
+    var parser = new EntityFrameworkQueryParser();
+
+    // User provides: "name:john AND salary:[50000 TO *] AND department:engineering"
+    Expression<Func<Employee, bool>> filter = parser.BuildFilter<Employee>(query);
+
+    var results = await _context.Employees
+        .Where(filter)
+        .ToListAsync();
+
+    return Ok(results);
+}
+```
+
+With field aliasing to protect your data model:
+
+```csharp
 var parser = new EntityFrameworkQueryParser();
 
-// Build a filter expression from a Lucene query
-Expression<Func<Employee, bool>> filter = parser.BuildFilter<Employee>(
-    "name:john AND salary:[50000 TO *] AND isActive:true"
-);
+// Map user-friendly names to actual entity properties
+var fieldMap = new FieldMap
+{
+    { "name", "FullName" },
+    { "dept", "Department.Name" },
+    { "hired", "HireDate" }
+};
 
-// Use with EF Core
-var results = await context.Employees.Where(filter).ToListAsync();
+// User query: "name:john AND dept:engineering AND hired:[2020-01-01 TO *]"
+Expression<Func<Employee, bool>> filter = parser.BuildFilter<Employee>(userQuery, fieldMap);
 ```
+
+## Use Cases
+
+- **Search APIs** - Let users filter data with powerful query syntax
+- **Admin Dashboards** - Enable complex filtering without custom UI for each field
+- **Reporting** - Allow dynamic report criteria using familiar search syntax
+- **Data Export** - Let users specify exactly what data they need
+- **Audit/Log Search** - Search through logs with date ranges, terms, and boolean logic
 
 ## Supported Query Syntax
 

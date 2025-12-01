@@ -2,7 +2,9 @@
 
 ## Architecture Overview
 
-This is a Lucene query string parser that converts query strings into an AST (Abstract Syntax Tree), with support for query transformation via visitors and Entity Framework integration.
+This library provides dynamic Lucene-style query capabilities for .NET applications, allowing users to write powerful search queries using familiar Lucene syntax. It serves as a modern replacement for [Foundatio.Parsers](https://github.com/FoundatioFx/Foundatio.Parsers).
+
+The core pipeline converts query strings into an AST (Abstract Syntax Tree), with support for query transformation via visitors. Currently supports Entity Framework Core for LINQ expression generation, with Elasticsearch support planned.
 
 ### Core Pipeline
 ```
