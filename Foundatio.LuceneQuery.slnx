@@ -7,10 +7,12 @@
   <Folder Name="/src/">
     <Project Path="src/Foundatio.LuceneQuery/Foundatio.LuceneQuery.csproj" />
     <Project Path="src/Foundatio.LuceneQuery.EntityFramework/Foundatio.LuceneQuery.EntityFramework.csproj" />
+    <Project Path="src/Foundatio.LuceneQuery.Elasticsearch/Foundatio.LuceneQuery.Elasticsearch.csproj" />
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/Foundatio.LuceneQuery.Tests/Foundatio.LuceneQuery.Tests.csproj" />
     <Project Path="tests/Foundatio.LuceneQuery.EntityFramework.Tests/Foundatio.LuceneQuery.EntityFramework.Tests.csproj" />
+    <Project Path="tests/Foundatio.LuceneQuery.Elasticsearch.Tests/Foundatio.LuceneQuery.Elasticsearch.Tests.csproj" />
   </Folder>
   <Folder Name="/benchmarks/">
     <Project Path="benchmarks/Foundatio.LuceneQuery.Benchmarks/Foundatio.LuceneQuery.Benchmarks.csproj" />
