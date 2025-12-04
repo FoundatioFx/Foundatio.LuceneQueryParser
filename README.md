@@ -75,7 +75,7 @@ Or add to your `NuGet.config`:
 </configuration>
 ```
 
-CI builds are published with pre-release version tags (e.g. `1.0.0-alpha.12345+sha.abcdef`). Use them to try new features early—avoid in production unless you understand the changes.
+CI builds are published with pre-release version tags (e.g. `1.0.0-preview.12345+sha.abcdef`). Use them to try new features early—avoid in production unless you understand the changes.
 
 ## 🤝 Contributing
 
