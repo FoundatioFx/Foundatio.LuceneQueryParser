@@ -40,16 +40,16 @@ var employees = await context.Employees.Where(filter).ToListAsync();
 
 ## 📚 Learn More
 
-👉 **[Complete Documentation](https://lucene-query.foundatio.dev/)**
+👉 **[Complete Documentation](https://lucenequery.foundatio.dev/)**
 
 Key topics:
 
-- [Getting Started](https://lucene-query.foundatio.dev/guide/getting-started.html) - Installation and basic usage
-- [Query Syntax](https://lucene-query.foundatio.dev/guide/query-syntax.html) - Full syntax reference
-- [Entity Framework](https://lucene-query.foundatio.dev/guide/entity-framework.html) - EF Core integration
-- [Elasticsearch](https://lucene-query.foundatio.dev/guide/elasticsearch.html) - Elasticsearch Query DSL generation
-- [Visitors](https://lucene-query.foundatio.dev/guide/visitors.html) - AST transformation patterns
-- [Validation](https://lucene-query.foundatio.dev/guide/validation.html) - Query validation options
+- [Getting Started](https://lucenequery.foundatio.dev/guide/getting-started.html) - Installation and basic usage
+- [Query Syntax](https://lucenequery.foundatio.dev/guide/query-syntax.html) - Full syntax reference
+- [Entity Framework](https://lucenequery.foundatio.dev/guide/entity-framework.html) - EF Core integration
+- [Elasticsearch](https://lucenequery.foundatio.dev/guide/elasticsearch.html) - Elasticsearch Query DSL generation
+- [Visitors](https://lucenequery.foundatio.dev/guide/visitors.html) - AST transformation patterns
+- [Validation](https://lucenequery.foundatio.dev/guide/validation.html) - Query validation options
 
 ## 📦 CI Packages (Feedz)
 
@@ -79,7 +79,7 @@ CI builds are published with pre-release version tags (e.g. `1.0.0-alpha.12345+s
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request. See our [documentation](https://lucene-query.foundatio.dev/) for development guidelines.
+Contributions are welcome! Please feel free to submit a Pull Request. See our [documentation](https://lucenequery.foundatio.dev/) for development guidelines.
 
 ## 🔗 Related Projects
 
