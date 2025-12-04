@@ -1,0 +1,16 @@
+{
+  "name": "foundatio-lucenequery-docs",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Foundatio.LuceneQuery Documentation",
+  "scripts": {
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "mermaid": "^11.4.1",
+    "vitepress": "2.0.0-alpha.15",
+    "vitepress-plugin-llms": "^0.0.12"
+  }
+}
