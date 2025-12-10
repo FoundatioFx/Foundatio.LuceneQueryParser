@@ -1,7 +1,8 @@
 import { defineConfig } from 'vitepress'
 import llmstxt from 'vitepress-plugin-llms'
+import { withMermaid } from "vitepress-plugin-mermaid"
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: 'Foundatio Lucene',
   description: 'Dynamic Lucene-style query capabilities for .NET with Entity Framework and Elasticsearch support',
   base: '/',
@@ -80,4 +81,4 @@ export default defineConfig({
       provider: 'local'
     }
   }
-})
+}))
