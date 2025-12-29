@@ -2,7 +2,7 @@
 
   <ItemGroup>
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="9.2.2" />
-    <PackageReference Include="Testcontainers.Elasticsearch" Version="4.4.0" />
+    <PackageReference Include="Testcontainers.Elasticsearch" Version="4.9.0" />
   </ItemGroup>
 
   <ItemGroup>
