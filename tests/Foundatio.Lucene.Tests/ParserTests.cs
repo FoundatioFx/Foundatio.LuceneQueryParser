@@ -501,12 +501,12 @@ public class ParserTests
         Assert.IsType<BooleanQueryNode>(doc.Query);
         var boolean = (BooleanQueryNode)doc.Query!;
         Assert.Equal(2, boolean.Clauses.Count);
-        
+
         // First clause: status:(active OR pending)
         Assert.IsType<FieldQueryNode>(boolean.Clauses[0].Query);
         var statusField = (FieldQueryNode)boolean.Clauses[0].Query!;
         Assert.Equal("status", statusField.Field);
-        
+
         // Second clause: title:(full text search)^2
         Assert.IsType<FieldQueryNode>(boolean.Clauses[1].Query);
         var titleField = (FieldQueryNode)boolean.Clauses[1].Query!;

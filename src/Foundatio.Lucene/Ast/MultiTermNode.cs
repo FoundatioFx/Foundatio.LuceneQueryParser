@@ -13,7 +13,7 @@ namespace Foundatio.Lucene.Ast;
 public class MultiTermNode : QueryNode
 {
     private ReadOnlyMemory<char> _combinedText;
-    
+
     /// <summary>
     /// The individual terms that make up this multi-term query as memory slices.
     /// </summary>
@@ -37,7 +37,7 @@ public class MultiTermNode : QueryNode
         get => _combinedText;
         set => _combinedText = value;
     }
-    
+
     /// <summary>
     /// The combined text of all terms separated by spaces.
     /// This is the text that would be sent to analysis.

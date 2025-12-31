@@ -6,7 +6,7 @@ namespace Foundatio.Lucene.Ast;
 public class ExistsNode : QueryNode
 {
     private ReadOnlyMemory<char> _field;
-    
+
     /// <summary>
     /// The field that must exist as a memory slice (zero allocation).
     /// </summary>
@@ -15,7 +15,7 @@ public class ExistsNode : QueryNode
         get => _field;
         set => _field = value;
     }
-    
+
     /// <summary>
     /// The field that must exist as a string. Use FieldMemory for zero-allocation access.
     /// </summary>

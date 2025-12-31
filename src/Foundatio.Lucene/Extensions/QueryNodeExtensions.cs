@@ -74,9 +74,9 @@ public static class QueryNodeExtensions
                 }
                 break;
 
-            // Terminal nodes that don't have fields or children:
-            // TermNode, PhraseNode, RegexNode, RangeNode, MatchAllNode, MultiTermNode
-            // These are handled by their parent FieldQueryNode
+                // Terminal nodes that don't have fields or children:
+                // TermNode, PhraseNode, RegexNode, RangeNode, MatchAllNode, MultiTermNode
+                // These are handled by their parent FieldQueryNode
         }
     }
 }

@@ -43,12 +43,12 @@ public static class LuceneQuery
             // Only combine errors if there are any
             var lexerErrors = lexer.Errors;
             var parserErrors = parser.Errors;
-            
+
             if (lexerErrors.Count == 0 && parserErrors.Count == 0)
             {
                 return LuceneParseResult.Success(document);
             }
-            
+
             // Combine lexer and parser errors
             var allErrors = new List<ParseError>(lexerErrors.Count + parserErrors.Count);
             allErrors.AddRange(lexerErrors);

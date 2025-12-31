@@ -44,7 +44,7 @@ public class QueryVisitorContext : IQueryVisitorContext
     {
         if (Data.TryGetValue(key, out var value) && value is IList<T> list)
             return list;
-        
+
         var newList = new List<T>();
         Data[key] = newList;
         return newList;

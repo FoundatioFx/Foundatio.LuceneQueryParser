@@ -22,22 +22,22 @@ public readonly record struct Token(
     /// Gets the token value as a span (zero allocation).
     /// </summary>
     public ReadOnlySpan<char> Span => Value.Span;
-    
+
     /// <summary>
     /// Gets the token value as a string. Only call when string is actually needed.
     /// </summary>
     public string GetString() => Value.Span.ToString();
-    
+
     /// <summary>
     /// Checks if the token value equals the specified string (zero allocation).
     /// </summary>
     public bool ValueEquals(string other) => Value.Span.SequenceEqual(other.AsSpan());
-    
+
     /// <summary>
     /// Checks if the token value equals the specified string, ignoring case (zero allocation).
     /// </summary>
     public bool ValueEqualsIgnoreCase(string other) => Value.Span.Equals(other.AsSpan(), StringComparison.OrdinalIgnoreCase);
-    
+
     /// <inheritdoc/>
     public override string ToString() => $"{Type}({GetString()}) at {Line}:{Column}";
 }

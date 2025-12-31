@@ -6,7 +6,7 @@ namespace Foundatio.Lucene.Ast;
 public class RegexNode : QueryNode
 {
     private ReadOnlyMemory<char> _pattern;
-    
+
     /// <summary>
     /// The regex pattern as a memory slice (zero allocation).
     /// </summary>
@@ -15,7 +15,7 @@ public class RegexNode : QueryNode
         get => _pattern;
         set => _pattern = value;
     }
-    
+
     /// <summary>
     /// The regex pattern (without enclosing /) as a string. Use PatternMemory for zero-allocation access.
     /// </summary>

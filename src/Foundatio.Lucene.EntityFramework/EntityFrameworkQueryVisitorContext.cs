@@ -92,7 +92,7 @@ public class EntityFrameworkQueryVisitorContext : QueryVisitorContext, IEntityFr
     /// </summary>
     public EntityFieldInfo? GetField(string fieldName)
     {
-        return Fields.FirstOrDefault(f => 
+        return Fields.FirstOrDefault(f =>
             string.Equals(f.FullName, fieldName, StringComparison.OrdinalIgnoreCase) ||
             string.Equals(f.Name, fieldName, StringComparison.OrdinalIgnoreCase));
     }

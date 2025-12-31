@@ -11,7 +11,7 @@ public class LuceneParseResult
     /// Cached empty error list to avoid allocations for successful parses.
     /// </summary>
     private static readonly List<ParseError> EmptyErrors = [];
-    
+
     /// <summary>
     /// The parsed query document. Always non-null after parsing, even if errors occurred.
     /// </summary>

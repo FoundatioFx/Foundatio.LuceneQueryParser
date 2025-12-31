@@ -148,14 +148,14 @@ public class LuceneLexer
         }
 
         int length = _position - start;
-        
+
         return new Token(TokenType.Whitespace, Slice(start, length), _line, startColumn, start, length);
     }
 
     // Buffer for processing escaped strings - reused to avoid allocations
     [ThreadStatic]
     private static char[]? _escapeBuffer;
-    
+
     private Token ConsumeQuotedString()
     {
         int start = _position;
@@ -198,7 +198,7 @@ public class LuceneLexer
 
         int contentLength = _position - contentStart;
         ReadOnlyMemory<char> content;
-        
+
         if (!hasEscapes)
         {
             // Zero-copy slice
@@ -228,10 +228,10 @@ public class LuceneLexer
         {
             _escapeBuffer = new char[input.Length];
         }
-        
+
         int writePos = 0;
         bool escaped = false;
-        
+
         foreach (char c in input)
         {
             if (escaped)
@@ -248,7 +248,7 @@ public class LuceneLexer
                 _escapeBuffer[writePos++] = c;
             }
         }
-        
+
         return new string(_escapeBuffer, 0, writePos);
     }
 
@@ -383,7 +383,7 @@ public class LuceneLexer
         var valueMemory = Slice(start, length);
 
         TokenType type;
-        
+
         if (valueSpan.SequenceEqual("AND"))
             type = TokenType.And;
         else if (valueSpan.SequenceEqual("OR"))
@@ -467,7 +467,7 @@ public class LuceneLexer
         // 2. Next char is a digit
         if (pos <= 0 || pos + 1 >= _sourceMemory.Length)
             return false;
-        
+
         return char.IsDigit(Source[pos - 1]) && char.IsDigit(Source[pos + 1]);
     }
 }

@@ -9,7 +9,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse(query);
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal(query, output);
@@ -20,7 +20,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("\"hello world\"");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("\"hello world\"", output);
@@ -31,7 +31,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("title:test");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("title:test", output);
@@ -42,7 +42,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("hello AND world");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Contains("AND", output);
@@ -53,7 +53,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("hello OR world");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Contains("OR", output);
@@ -64,7 +64,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("NOT test");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("NOT test", output);
@@ -75,7 +75,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("[10 TO 20]");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("[10 TO 20]", output);
@@ -86,7 +86,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("{10 TO 20}");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("{10 TO 20}", output);
@@ -97,7 +97,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("roam~2");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("roam~", output);
@@ -108,7 +108,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("important^2");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("important^2", output);
@@ -119,7 +119,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("test*");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("test*", output);
@@ -130,7 +130,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("/pattern/");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("/pattern/", output);
@@ -141,7 +141,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("/pattern/");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("/pattern/", output);
@@ -152,7 +152,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("_exists_:field_name");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("_exists_:field_name", output);
@@ -163,7 +163,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("_missing_:field_name");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("_missing_:field_name", output);
@@ -174,7 +174,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("field_name:*");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("field_name:*", output);
@@ -185,7 +185,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("(hello OR world)");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Contains("(", output);
@@ -197,7 +197,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("*:*");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("*:*", output);
@@ -208,7 +208,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("+required");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("+required", output);
@@ -219,7 +219,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("-excluded");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("-excluded", output);
@@ -230,7 +230,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("\"hello world\"~5");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("\"hello world\"~5", output);
@@ -241,7 +241,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("title:(quick OR brown) AND status:published");
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Contains("title:", output);
@@ -254,7 +254,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("title:(full text search)", splitOnWhitespace: false);
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("title:(full text search)", output);
@@ -265,7 +265,7 @@ public class QueryStringBuilderTests
     {
         var result = LuceneQuery.Parse("title:(full text search)^2", splitOnWhitespace: false);
         var builder = new QueryStringBuilder();
-        
+
         var output = builder.Visit(result.Document);
 
         Assert.Equal("title:(full text search)^2", output);
@@ -412,7 +412,7 @@ public class QueryStringBuilderTests
 
             var output = QueryStringBuilder.ToQueryString(result.Document);
             var result2 = LuceneQuery.Parse(output);
-            
+
             if (result2.IsSuccess)
             {
                 var output2 = QueryStringBuilder.ToQueryString(result2.Document);

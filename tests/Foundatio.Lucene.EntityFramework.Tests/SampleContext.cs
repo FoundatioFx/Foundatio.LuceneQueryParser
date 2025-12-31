@@ -77,10 +77,10 @@ public class Employee
     public int Age { get; set; }
     public DateTime HireDate { get; set; }
     public bool IsActive { get; set; }
-    
+
     public int CompanyId { get; set; }
     public Company Company { get; set; } = null!;
-    
+
     public int? DepartmentId { get; set; }
     public Department? Department { get; set; }
 }
@@ -95,7 +95,7 @@ public class Company
     public string? Location { get; set; }
     public int FoundedYear { get; set; }
     public bool IsPublic { get; set; }
-    
+
     public ICollection<Employee> Employees { get; set; } = [];
     public ICollection<Department> Departments { get; set; } = [];
 }
@@ -108,10 +108,10 @@ public class Department
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public int? Budget { get; set; }
-    
+
     public int CompanyId { get; set; }
     public Company Company { get; set; } = null!;
-    
+
     public ICollection<Employee> Employees { get; set; } = [];
 }
 
@@ -134,7 +134,7 @@ public class DataValue
     public int DataDefinitionId { get; set; }
     public int ContactId { get; set; }
     public Contact Contact { get; set; } = null!;
-    
+
     public string? StringValue { get; set; }
     public int? IntegerValue { get; set; }
     public decimal? DecimalValue { get; set; }

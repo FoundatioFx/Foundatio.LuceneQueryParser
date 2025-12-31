@@ -362,7 +362,7 @@ public class FieldResolverQueryVisitorTests
         var result = LuceneQuery.Parse("alias:value");
         Assert.True(result.IsSuccess);
 
-        await FieldResolverQueryVisitor.RunAsync(result.Document, field => 
+        await FieldResolverQueryVisitor.RunAsync(result.Document, field =>
             field == "alias" ? "resolvedField" : null);
 
         var query = ToQueryString(result.Document);
@@ -431,7 +431,7 @@ public class FieldResolverQueryVisitorTests
         var fieldNode = FindFirstFieldQueryNode(result.Document!.Query!);
         Assert.NotNull(fieldNode);
         Assert.Equal("actualField", fieldNode.Field);
-        
+
         var originalField = fieldNode.GetOriginalField(context);
         Assert.Equal("alias", originalField);
     }
@@ -454,7 +454,7 @@ public class FieldResolverQueryVisitorTests
         var fieldNode = FindFirstFieldQueryNode(result.Document!.Query!);
         Assert.NotNull(fieldNode);
         Assert.Equal("other", fieldNode.Field); // Unchanged due to hierarchical resolver
-        
+
         var originalField = fieldNode.GetOriginalField(context);
         Assert.Null(originalField); // Not set because field didn't change
     }
@@ -572,7 +572,7 @@ public class FieldResolverQueryVisitorTests
         Assert.True(result.IsSuccess);
 
         var context = new QueryVisitorContext();
-        
+
         // First run include visitor
         context.SetIncludeResolver(name => Task.FromResult(includes.GetValueOrDefault(name)));
         await new IncludeVisitor().RunAsync(result.Document, context);

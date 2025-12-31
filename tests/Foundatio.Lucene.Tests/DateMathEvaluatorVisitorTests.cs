@@ -480,11 +480,11 @@ public class DateMathEvaluatorVisitorTests
 
         // Assert - Just verify it doesn't throw and produces a result
         Assert.NotNull(evaluated);
-        
+
         // Convert back to string and verify DateMath expressions are resolved
         var builder = new QueryStringBuilder();
         var queryString = builder.Visit(evaluated);
-        
+
         Assert.DoesNotContain("now", queryString);
         Assert.Contains("2024", queryString); // Contains evaluated dates
     }

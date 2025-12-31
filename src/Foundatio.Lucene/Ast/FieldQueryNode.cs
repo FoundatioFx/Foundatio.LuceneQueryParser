@@ -6,7 +6,7 @@ namespace Foundatio.Lucene.Ast;
 public class FieldQueryNode : QueryNode
 {
     private ReadOnlyMemory<char> _field;
-    
+
     /// <summary>
     /// The field name as a memory slice (zero allocation).
     /// </summary>
@@ -15,7 +15,7 @@ public class FieldQueryNode : QueryNode
         get => _field;
         set => _field = value;
     }
-    
+
     /// <summary>
     /// The field name as a string. Use FieldMemory for zero-allocation access.
     /// </summary>

@@ -7,7 +7,7 @@ public class TermNode : QueryNode
 {
     private ReadOnlyMemory<char> _term;
     private ReadOnlyMemory<char> _unescapedTerm;
-    
+
     /// <summary>
     /// The term value as a memory slice (zero allocation).
     /// </summary>
@@ -16,7 +16,7 @@ public class TermNode : QueryNode
         get => _term;
         set => _term = value;
     }
-    
+
     /// <summary>
     /// The term value as a string. Use TermMemory for zero-allocation access.
     /// </summary>
@@ -34,7 +34,7 @@ public class TermNode : QueryNode
         get => _unescapedTerm;
         set => _unescapedTerm = value;
     }
-    
+
     /// <summary>
     /// The unescaped term value as a string. Use UnescapedTermMemory for zero-allocation access.
     /// </summary>

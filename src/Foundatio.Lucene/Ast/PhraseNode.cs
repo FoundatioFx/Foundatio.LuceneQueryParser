@@ -6,7 +6,7 @@ namespace Foundatio.Lucene.Ast;
 public class PhraseNode : QueryNode
 {
     private ReadOnlyMemory<char> _phrase;
-    
+
     /// <summary>
     /// The phrase value as a memory slice (zero allocation).
     /// </summary>
@@ -15,7 +15,7 @@ public class PhraseNode : QueryNode
         get => _phrase;
         set => _phrase = value;
     }
-    
+
     /// <summary>
     /// The phrase value (without quotes) as a string. Use PhraseMemory for zero-allocation access.
     /// </summary>

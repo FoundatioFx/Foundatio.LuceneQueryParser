@@ -254,7 +254,7 @@ public class LexerTests
     public void Tokenize_TracksPositionCorrectly()
     {
         var lexer = new LuceneLexer("a b\nc");
-        
+
         var token1 = lexer.NextToken();
         Assert.Equal(1, token1.Line);
         Assert.Equal(1, token1.Column);

@@ -58,7 +58,7 @@ public static class StringExtensions
         foreach (char ch in input)
         {
             // Escape special characters
-            if (ch is '+' or '-' or '!' or '(' or ')' or '{' or '}' or '[' or ']' 
+            if (ch is '+' or '-' or '!' or '(' or ')' or '{' or '}' or '[' or ']'
                 or '^' or '"' or '~' or '*' or '?' or ':' or '\\' or '/')
             {
                 sb.Append('\\');
