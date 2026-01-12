@@ -5,6 +5,17 @@ namespace Foundatio.Lucene.Ast;
 /// </summary>
 public class TermNode : QueryNode
 {
+    /// <summary>
+    /// Sentinel value indicating the default fuzzy distance should be used.
+    /// When FuzzyDistance equals this value, it means ~ was specified without a number.
+    /// </summary>
+    public const int DefaultFuzzyDistance = -1;
+
+    /// <summary>
+    /// The actual default fuzzy distance value used when DefaultFuzzyDistance is specified.
+    /// This is the Lucene standard default of 2.
+    /// </summary>
+    public const int DefaultFuzzyDistanceValue = 2;
     private ReadOnlyMemory<char> _term;
     private ReadOnlyMemory<char> _unescapedTerm;
 
@@ -51,8 +62,21 @@ public class TermNode : QueryNode
 
     /// <summary>
     /// Optional fuzzy distance (for fuzzy queries with ~).
+    /// Use <see cref="DefaultFuzzyDistance"/> (-1) to indicate default fuzzy distance was requested.
+    /// Use <see cref="GetEffectiveFuzzyDistance"/> to get the actual fuzzy distance to use.
     /// </summary>
     public int? FuzzyDistance { get; set; }
+
+    /// <summary>
+    /// Gets the effective fuzzy distance, resolving the default sentinel value to the actual default.
+    /// </summary>
+    /// <returns>The fuzzy distance to use, or null if not a fuzzy query.</returns>
+    public int? GetEffectiveFuzzyDistance()
+    {
+        if (FuzzyDistance == DefaultFuzzyDistance)
+            return DefaultFuzzyDistanceValue;
+        return FuzzyDistance;
+    }
 
     /// <summary>
     /// Whether this is a prefix query (ends with *).

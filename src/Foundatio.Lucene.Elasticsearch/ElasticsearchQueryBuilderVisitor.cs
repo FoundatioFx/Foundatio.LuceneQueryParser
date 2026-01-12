@@ -241,12 +241,15 @@ public class ElasticsearchQueryBuilderVisitor : QueryNodeVisitor
         }
         else if (node.FuzzyDistance.HasValue)
         {
-            // Fuzzy query - use Fuzziness property which accepts a string
+            var fuzziness = node.FuzzyDistance.Value == TermNode.DefaultFuzzyDistance
+                ? "AUTO"
+                : node.FuzzyDistance.Value.ToString();
+
             if (field is not null)
             {
                 query = new FuzzyQuery((Field)field, term)
                 {
-                    Fuzziness = node.FuzzyDistance.Value.ToString()
+                    Fuzziness = fuzziness
                 };
             }
             else if (_context.DefaultFields is { Length: > 0 })
@@ -254,12 +257,15 @@ public class ElasticsearchQueryBuilderVisitor : QueryNodeVisitor
                 query = new MultiMatchQuery(term)
                 {
                     Fields = Fields.FromStrings(_context.DefaultFields),
-                    Fuzziness = new Fuzziness(node.FuzzyDistance.Value.ToString())
+                    Fuzziness = new Fuzziness(fuzziness)
                 };
             }
             else
             {
-                query = new QueryStringQuery($"{term}~{node.FuzzyDistance.Value}");
+                var fuzzyString = node.FuzzyDistance.Value == TermNode.DefaultFuzzyDistance
+                    ? $"{term}~"
+                    : $"{term}~{node.FuzzyDistance.Value}";
+                query = new QueryStringQuery(fuzzyString);
             }
         }
         else if (field is null && _context.DefaultFields is { Length: > 1 })

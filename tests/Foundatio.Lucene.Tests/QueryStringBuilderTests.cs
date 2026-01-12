@@ -104,6 +104,17 @@ public class QueryStringBuilderTests
     }
 
     [Fact]
+    public void ToQueryString_FuzzyTermNonDefault_ReturnsEditDistance()
+    {
+        var result = LuceneQuery.Parse("roam~1");
+        var builder = new QueryStringBuilder();
+
+        var output = builder.Visit(result.Document);
+
+        Assert.Equal("roam~1", output);
+    }
+
+    [Fact]
     public void ToQueryString_BoostedTerm_ReturnsCaret()
     {
         var result = LuceneQuery.Parse("important^2");

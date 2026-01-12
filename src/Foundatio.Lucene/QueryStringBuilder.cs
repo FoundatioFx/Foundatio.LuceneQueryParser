@@ -203,7 +203,7 @@ public class QueryStringBuilder
         if (node.FuzzyDistance.HasValue)
         {
             _builder.Append('~');
-            if (node.FuzzyDistance.Value != 2)
+            if (node.FuzzyDistance.Value != TermNode.DefaultFuzzyDistanceValue)
             {
                 _builder.Append(node.FuzzyDistance.Value);
             }
@@ -312,7 +312,7 @@ public class QueryStringBuilder
         if (node.FuzzyDistance.HasValue)
         {
             _builder.Append('~');
-            if (node.FuzzyDistance.Value != 2)
+            if (node.FuzzyDistance.Value != TermNode.DefaultFuzzyDistanceValue)
             {
                 _builder.Append(node.FuzzyDistance.Value);
             }

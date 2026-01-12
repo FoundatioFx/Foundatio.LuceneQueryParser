@@ -1054,6 +1054,10 @@ public class LuceneParser
     /// <summary>
     /// Parses a fuzzy distance value after ~.
     /// </summary>
+    /// <returns>
+    /// The explicit fuzzy distance if specified, or <see cref="TermNode.DefaultFuzzyDistance"/>
+    /// to indicate the default should be used.
+    /// </returns>
     private int ParseFuzzyDistance()
     {
         SkipWhitespace();
@@ -1067,8 +1071,8 @@ public class LuceneParser
             }
         }
 
-        // Default fuzzy distance
-        return 2;
+        // Return sentinel value to indicate default fuzzy distance
+        return TermNode.DefaultFuzzyDistance;
     }
 
     /// <summary>

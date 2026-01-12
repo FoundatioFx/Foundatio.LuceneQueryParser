@@ -190,7 +190,8 @@ public class ParserTests
         Assert.IsType<TermNode>(doc.Query);
         var term = (TermNode)doc.Query;
         Assert.Equal("roam", term.Term);
-        Assert.Equal(2, term.FuzzyDistance);
+        Assert.Equal(2, term.FuzzyDistance); // Explicitly specified as 2
+        Assert.Equal(2, term.GetEffectiveFuzzyDistance());
     }
 
     [Fact]
@@ -203,7 +204,27 @@ public class ParserTests
         Assert.IsType<TermNode>(doc.Query);
         var term = (TermNode)doc.Query;
         Assert.Equal("roam", term.Term);
-        Assert.Equal(2, term.FuzzyDistance); // Default fuzziness is 2
+        Assert.Equal(TermNode.DefaultFuzzyDistance, term.FuzzyDistance); // Sentinel value (-1)
+        Assert.Equal(2, term.GetEffectiveFuzzyDistance()); // Effective value is 2
+    }
+
+    [Fact]
+    public void Parse_DefaultFuzzy_DifferentFromExplicitTwo()
+    {
+        var defaultResult = LuceneQuery.Parse("roam~");
+        var explicitResult = LuceneQuery.Parse("roam~2");
+
+        var defaultTerm = (TermNode)defaultResult.Document.Query!;
+        var explicitTerm = (TermNode)explicitResult.Document.Query!;
+
+        // The raw FuzzyDistance values are different
+        Assert.Equal(TermNode.DefaultFuzzyDistance, defaultTerm.FuzzyDistance);
+        Assert.Equal(2, explicitTerm.FuzzyDistance);
+        Assert.NotEqual(defaultTerm.FuzzyDistance, explicitTerm.FuzzyDistance);
+
+        // But the effective values are the same
+        Assert.Equal(2, defaultTerm.GetEffectiveFuzzyDistance());
+        Assert.Equal(2, explicitTerm.GetEffectiveFuzzyDistance());
     }
 
     [Fact]
@@ -973,6 +994,82 @@ public class ParserTests
     #region Fuzzy and Proximity Tests
 
     [Fact]
+    public void Parse_FuzzyWithEditDistance1_ReturnsTermWithFuzzy()
+    {
+        var result = LuceneQuery.Parse("roam~1");
+
+        Assert.True(result.IsSuccess);
+        var doc = result.Document;
+        Assert.IsType<TermNode>(doc.Query);
+        var term = (TermNode)doc.Query;
+        Assert.Equal("roam", term.Term);
+        Assert.Equal(1, term.FuzzyDistance);
+    }
+
+    [Fact]
+    public void Parse_FuzzyWithEditDistance0_ReturnsTermWithFuzzy()
+    {
+        var result = LuceneQuery.Parse("exact~0");
+
+        Assert.True(result.IsSuccess);
+        var doc = result.Document;
+        Assert.IsType<TermNode>(doc.Query);
+        var term = (TermNode)doc.Query;
+        Assert.Equal("exact", term.Term);
+        Assert.Equal(0, term.FuzzyDistance);
+    }
+
+    [Fact]
+    public void Parse_FuzzyFieldQuery_ReturnsFieldNodeWithFuzzyTerm()
+    {
+        var result = LuceneQuery.Parse("title:hello~2");
+
+        Assert.True(result.IsSuccess);
+        var doc = result.Document;
+        Assert.IsType<FieldQueryNode>(doc.Query);
+        var field = (FieldQueryNode)doc.Query;
+        Assert.Equal("title", field.Field);
+        Assert.IsType<TermNode>(field.Query);
+        var term = (TermNode)field.Query;
+        Assert.Equal("hello", term.Term);
+        Assert.Equal(2, term.FuzzyDistance);
+    }
+
+    [Fact]
+    public void Parse_FuzzyWithBoost_ReturnsTermWithBothModifiers()
+    {
+        var result = LuceneQuery.Parse("term~2^3");
+
+        Assert.True(result.IsSuccess);
+        var doc = result.Document;
+        Assert.IsType<TermNode>(doc.Query);
+        var term = (TermNode)doc.Query;
+        Assert.Equal("term", term.Term);
+        Assert.Equal(2, term.FuzzyDistance);
+        Assert.Equal(3.0f, term.Boost);
+    }
+
+    [Fact]
+    public void Parse_FuzzyInBooleanQuery_ReturnsBooleanWithFuzzyTerm()
+    {
+        var result = LuceneQuery.Parse("hello~1 AND world~2");
+
+        Assert.True(result.IsSuccess);
+        var doc = result.Document;
+        Assert.IsType<BooleanQueryNode>(doc.Query);
+        var boolQuery = (BooleanQueryNode)doc.Query;
+        Assert.Equal(2, boolQuery.Clauses.Count);
+
+        var firstTerm = (TermNode)boolQuery.Clauses[0].Query!;
+        Assert.Equal("hello", firstTerm.Term);
+        Assert.Equal(1, firstTerm.FuzzyDistance);
+
+        var secondTerm = (TermNode)boolQuery.Clauses[1].Query!;
+        Assert.Equal("world", secondTerm.Term);
+        Assert.Equal(2, secondTerm.FuzzyDistance);
+    }
+
+    [Fact]
     public void Parse_FuzzyDecimal_ReturnsTermWithFuzzy()
     {
         // Note: roam~0.8 is parsed as "roam~0" followed by ".8" as separate terms
@@ -996,6 +1093,19 @@ public class ParserTests
         var phrase = (PhraseNode)doc.Query;
         Assert.Equal("blah criter", phrase.Phrase);
         Assert.Equal(1, phrase.Slop);
+    }
+
+    [Fact]
+    public void Parse_ProximityWithLargeDistance_ReturnsPhraseWithSlop()
+    {
+        var result = LuceneQuery.Parse("\"hello world\"~10");
+
+        Assert.True(result.IsSuccess);
+        var doc = result.Document;
+        Assert.IsType<PhraseNode>(doc.Query);
+        var phrase = (PhraseNode)doc.Query;
+        Assert.Equal("hello world", phrase.Phrase);
+        Assert.Equal(10, phrase.Slop);
     }
 
     #endregion

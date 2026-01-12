@@ -56,6 +56,19 @@ public class MultiTermNode : QueryNode
 
     /// <summary>
     /// Optional fuzzy distance (for fuzzy queries with ~).
+    /// Use <see cref="TermNode.DefaultFuzzyDistance"/> (-1) to indicate default fuzzy distance was requested.
+    /// Use <see cref="GetEffectiveFuzzyDistance"/> to get the actual fuzzy distance to use.
     /// </summary>
     public int? FuzzyDistance { get; set; }
+
+    /// <summary>
+    /// Gets the effective fuzzy distance, resolving the default sentinel value to the actual default.
+    /// </summary>
+    /// <returns>The fuzzy distance to use, or null if not a fuzzy query.</returns>
+    public int? GetEffectiveFuzzyDistance()
+    {
+        if (FuzzyDistance == TermNode.DefaultFuzzyDistance)
+            return TermNode.DefaultFuzzyDistanceValue;
+        return FuzzyDistance;
+    }
 }

@@ -40,6 +40,43 @@ Add `~N` to find words within N positions of each other:
 "hello world"~2    // "hello" and "world" within 2 words of each other
 ```
 
+## Fuzzy Search
+
+Add `~` to a term to perform fuzzy matching based on edit distance (Levenshtein distance):
+
+```
+roam~              // Fuzzy search with default edit distance of 2
+roam~1             // Fuzzy search with edit distance of 1
+roam~0             // Exact match (edit distance of 0)
+```
+
+The edit distance specifies the maximum number of character changes (insertions, deletions, substitutions) allowed to match a term. For example, `roam~1` would match:
+
+- `roam` (exact)
+- `foam` (1 substitution)
+- `roams` (1 insertion)
+
+::: tip
+Edit distance must be an integer. The default value is 2 when omitted. Lower values (0-1) are more restrictive and generally faster.
+:::
+
+::: info AST Representation
+The AST preserves whether the fuzzy distance was explicitly specified:
+- `term~` → `FuzzyDistance = TermNode.DefaultFuzzyDistance` (sentinel value -1)
+- `term~2` → `FuzzyDistance = 2` (explicitly specified)
+
+Both resolve to an effective distance of 2, but you can distinguish between default and explicit using `GetEffectiveFuzzyDistance()`.
+:::
+
+### Fuzzy with Field Queries
+
+Fuzzy search works with field queries:
+
+```
+title:hello~2      // Fuzzy search in the "title" field
+user.name:john~1   // Fuzzy search in nested field
+```
+
 ## Field Queries
 
 Specify which field to search:
@@ -265,6 +302,12 @@ level:error AND timestamp:[now-1h TO now] AND (service:api OR service:web) NOT t
 
 ```
 name:john* AND role:(admin OR moderator) AND status:active AND lastLogin:[now-30d TO *]
+```
+
+### Fuzzy Name Search
+
+```
+firstName:john~1 AND lastName:smith~2
 ```
 
 ### Document Search
