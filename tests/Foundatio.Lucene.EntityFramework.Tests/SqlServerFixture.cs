@@ -17,8 +17,7 @@ public class SqlServerFixture : IAsyncLifetime
 
     public SqlServerFixture()
     {
-        _container = new MsSqlBuilder()
-            .WithImage("concordservicing/sqlserver-fts:2022-latest")
+        _container = new MsSqlBuilder("concordservicing/sqlserver-fts:2022-latest")
             .WithPassword("P@ssword1!")
             .Build();
     }
